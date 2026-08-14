@@ -1,0 +1,57 @@
+.full-width {
+  width: 100%;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.product-field {
+  flex: 2;
+}
+
+.quantity-field {
+  width: 90px;
+}
+
+.line-total {
+  width: 90px;
+  text-align: right;
+}
+
+.summary-card {
+  max-width: 360px;
+  margin: 16px 0;
+  padding: 12px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 0;
+}
+
+.summary-row.discount {
+  color: #757575;
+  font-size: 0.9em;
+}
+
+.summary-row.total {
+  font-weight: 600;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 4px;
+  padding-top: 4px;
+}
+
+.error-message {
+  color: #c62828;
+}
+
+.actions {
+  margin-top: 12px;
+}

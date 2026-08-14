@@ -1,0 +1,36 @@
+<div class="page-header">
+  <h1>Customers</h1>
+  <button mat-flat-button color="primary" (click)="openCreateDialog()">
+    <mat-icon>add</mat-icon> Add Customer
+  </button>
+</div>
+
+<mat-form-field appearance="outline" class="search-field">
+  <mat-label>Search</mat-label>
+  <input matInput [(ngModel)]="searchTerm" placeholder="Name or email" />
+</mat-form-field>
+
+@if (!loading && filteredCustomers.length === 0) {
+  <app-empty-state message="No customers found." icon="people"></app-empty-state>
+} @else {
+  <table mat-table [dataSource]="filteredCustomers">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let c">{{ c.name }}</td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let c">{{ c.email }}</td>
+    </ng-container>
+    <ng-container matColumnDef="tier">
+      <th mat-header-cell *matHeaderCellDef>Tier</th>
+      <td mat-cell *matCellDef="let c"><app-tier-chip [tier]="c.tier"></app-tier-chip></td>
+    </ng-container>
+    <ng-container matColumnDef="orderCount">
+      <th mat-header-cell *matHeaderCellDef>Orders</th>
+      <td mat-cell *matCellDef="let c">{{ c.orderCount }}</td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+}

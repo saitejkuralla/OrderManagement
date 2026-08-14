@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/backend/">
+    <Project Path="backend/OrderFlow.Api/OrderFlow.Api.csproj" />
+    <Project Path="backend/OrderFlow.Application/OrderFlow.Application.csproj" />
+    <Project Path="backend/OrderFlow.Domain/OrderFlow.Domain.csproj" />
+    <Project Path="backend/OrderFlow.Infrastructure/OrderFlow.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/OrderFlow.IntegrationTests/OrderFlow.IntegrationTests.csproj" />
+    <Project Path="tests/OrderFlow.UnitTests/OrderFlow.UnitTests.csproj" />
+  </Folder>
+</Solution>
