@@ -1,0 +1,24 @@
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.search-field {
+  width: 320px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+table {
+  width: 100%;
+}
+
+.active-icon {
+  color: #2e7d32;
+}
+
+.inactive-icon {
+  color: #c62828;
+}

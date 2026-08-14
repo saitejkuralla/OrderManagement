@@ -1,0 +1,22 @@
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.app-container {
+  height: calc(100vh - 64px);
+}
+
+.app-sidenav {
+  width: 220px;
+}
+
+.app-content {
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.active-link {
+  background: rgba(0, 0, 0, 0.06);
+}

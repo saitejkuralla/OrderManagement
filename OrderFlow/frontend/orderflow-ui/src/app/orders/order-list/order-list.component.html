@@ -1,0 +1,51 @@
+<div class="page-header">
+  <h1>Orders</h1>
+  <button mat-flat-button color="primary" routerLink="/orders/new">
+    <mat-icon>add</mat-icon> Create Order
+  </button>
+</div>
+
+<div class="filters">
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search by customer</mat-label>
+    <input matInput [(ngModel)]="searchTerm" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="status-field">
+    <mat-label>Status</mat-label>
+    <mat-select [(ngModel)]="statusFilter">
+      @for (s of statuses; track s) {
+        <mat-option [value]="s">{{ s }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+@if (!loading && filteredOrders.length === 0) {
+  <app-empty-state message="No orders found." icon="receipt_long"></app-empty-state>
+} @else {
+  <table mat-table [dataSource]="filteredOrders">
+    <ng-container matColumnDef="customerName">
+      <th mat-header-cell *matHeaderCellDef>Customer</th>
+      <td mat-cell *matCellDef="let o">{{ o.customerName }}</td>
+    </ng-container>
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let o">{{ o.createdAt | date: 'medium' }}</td>
+    </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let o">{{ o.status }}</td>
+    </ng-container>
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef>Total</th>
+      <td mat-cell *matCellDef="let o">{{ o.total | number: '1.2-2' }}</td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      (click)="viewOrder(row.id)"
+      class="clickable-row"
+    ></tr>
+  </table>
+}
