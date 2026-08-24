@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "type": "command",
+        "bash": "./.github/hooks/scripts/spec-context.sh",
+        "powershell": "./.github/hooks/scripts/spec-context.ps1",
+        "cwd": ".",
+        "timeoutSec": 10
+      }
+    ],
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": "./.github/hooks/scripts/tool-scope-validator.sh",
+        "powershell": "./.github/hooks/scripts/tool-scope-validator.ps1",
+        "cwd": ".",
+        "timeoutSec": 10
+      }
+    ],
+    "subagentStart": [
+      {
+        "type": "command",
+        "bash": "./.github/hooks/scripts/spec-context.sh",
+        "powershell": "./.github/hooks/scripts/spec-context.ps1",
+        "cwd": ".",
+        "timeoutSec": 10
+      }
+    ],
+    "subagentStop": [
+      {
+        "type": "command",
+        "bash": "./.github/hooks/scripts/spec-validator.sh",
+        "powershell": "./.github/hooks/scripts/spec-validator.ps1",
+        "cwd": ".",
+        "timeoutSec": 10
+      }
+    ]
+  }
+}
