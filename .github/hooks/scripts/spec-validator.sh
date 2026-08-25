@@ -3,8 +3,8 @@ set -euo pipefail
 
 INPUT="$(cat || true)"
 SPEC_ID="${SPEC_ID:-SPEC-1042}"
-REPO_ROOT="$(cd ../.. && pwd)"
-SPEC_FILE="$REPO_ROOT/../../docs/specs/${SPEC_ID}-order-discount.md"
+REPO_ROOT="$(pwd)"
+SPEC_FILE="$REPO_ROOT/OrderFlow/specs/${SPEC_ID}-order-discount/${SPEC_ID}-order-discount.md"
 
 if [[ ! -f "$SPEC_FILE" ]]; then
   python3 - <<'PY'

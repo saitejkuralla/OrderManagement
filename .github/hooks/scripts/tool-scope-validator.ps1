@@ -33,11 +33,11 @@ if ($writeTools -notcontains $tool) {
 }
 
 $allowed = @(
-    "(^|[\/])src[\/]Orders[\/]",
-    "(^|[\/])src[\/]Discounts[\/]",
-    "(^|[\/])tests[\/]Orders[\/]",
-    "(^|[\/])tests[\/]Discounts[\/]",
-    "(^|[\/])docs[\/]specs[\/]"
+    "(^|[\/])OrderFlow[\/]backend[\/]OrderFlow\.Domain[\/]Entities[\/]",
+    "(^|[\/])OrderFlow[\/]backend[\/]OrderFlow\.Domain[\/]Discounts[\/]",
+    "(^|[\/])OrderFlow[\/]backend[\/]OrderFlow\.Application[\/]",
+    "(^|[\/])OrderFlow[\/]tests[\/]OrderFlow\.UnitTests[\/]",
+    "(^|[\/])OrderFlow[\/]specs[\/]"
 )
 
 foreach ($pattern in $allowed) {
@@ -49,5 +49,5 @@ foreach ($pattern in $allowed) {
 
 @{
     permissionDecision = "deny"
-    permissionDecisionReason = "SPEC-1042 scope enforcement blocked this write. Allowed write scope: src/Orders/**, src/Discounts/**, tests/Orders/**, tests/Discounts/**, docs/specs/**."
+    permissionDecisionReason = "SPEC-1042 scope enforcement blocked this write. Allowed write scope: OrderFlow/backend/OrderFlow.Domain/Entities/**, OrderFlow/backend/OrderFlow.Domain/Discounts/**, OrderFlow/backend/OrderFlow.Application/**, OrderFlow/tests/OrderFlow.UnitTests/**, OrderFlow/specs/**."
 } | ConvertTo-Json -Compress

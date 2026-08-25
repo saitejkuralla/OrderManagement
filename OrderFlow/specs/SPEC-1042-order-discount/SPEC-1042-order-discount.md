@@ -46,10 +46,12 @@ Allowed:
 
 Expected areas:
 
-src/Orders/**
-src/Discounts/**
-tests/Orders/**
-tests/Discounts/**
+OrderFlow/backend/OrderFlow.Domain/Entities/**
+OrderFlow/backend/OrderFlow.Domain/Discounts/**
+OrderFlow/backend/OrderFlow.Application/**
+OrderFlow/tests/OrderFlow.UnitTests/Domain/**
+OrderFlow/tests/OrderFlow.UnitTests/Application/**
+OrderFlow/specs/**
 
 ## 4. Out of Scope
 
@@ -64,10 +66,10 @@ Do not modify:
 
 Expected forbidden examples:
 
-src/Payments/**
-src/Customers/**
-infrastructure/**
-deployment/**
+OrderFlow/backend/OrderFlow.Infrastructure/**
+OrderFlow/backend/OrderFlow.Api/Controllers/CustomersController.cs
+OrderFlow/backend/OrderFlow.Api/Controllers/ProductsController.cs
+OrderFlow/frontend/**
 
 ## 5. Testing Requirements
 

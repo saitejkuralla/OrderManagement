@@ -37,11 +37,11 @@ if tool not in write_tools:
     sys.exit(0)
 
 allowed = [
-    r"(^|[\\/])src[\\/]Orders[\\/]",
-    r"(^|[\\/])src[\\/]Discounts[\\/]",
-    r"(^|[\\/])tests[\\/]Orders[\\/]",
-    r"(^|[\\/])tests[\\/]Discounts[\\/]",
-    r"(^|[\\/])docs[\\/]specs[\\/]"
+    r"(^|[\\/])OrderFlow[\\/]backend[\\/]OrderFlow\.Domain[\\/]Entities[\\/]",
+    r"(^|[\\/])OrderFlow[\\/]backend[\\/]OrderFlow\.Domain[\\/]Discounts[\\/]",
+    r"(^|[\\/])OrderFlow[\\/]backend[\\/]OrderFlow\.Application[\\/]",
+    r"(^|[\\/])OrderFlow[\\/]tests[\\/]OrderFlow\.UnitTests[\\/]",
+    r"(^|[\\/])OrderFlow[\\/]specs[\\/]"
 ]
 
 for pattern in allowed:
@@ -54,7 +54,8 @@ print(json.dumps({
     "permissionDecision": "deny",
     "permissionDecisionReason":
         "SPEC-1042 scope enforcement blocked this write. "
-        "Allowed write scope: src/Orders/**, src/Discounts/**, "
-        "tests/Orders/**, tests/Discounts/**, docs/specs/**."
+        "Allowed write scope: OrderFlow/backend/OrderFlow.Domain/Entities/**, "
+        "OrderFlow/backend/OrderFlow.Domain/Discounts/**, OrderFlow/backend/OrderFlow.Application/**, "
+        "OrderFlow/tests/OrderFlow.UnitTests/**, OrderFlow/specs/**."
 }))
 PY

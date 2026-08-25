@@ -3,8 +3,8 @@ set -euo pipefail
 
 INPUT="$(cat || true)"
 SPEC_ID="${SPEC_ID:-SPEC-1042}"
-REPO_ROOT="$(cd ../.. && pwd)"
-SPEC_DIR="$REPO_ROOT/../../docs/specs"
+REPO_ROOT="$(pwd)"
+SPEC_DIR="$REPO_ROOT/OrderFlow/specs/${SPEC_ID}-order-discount"
 SPEC_FILE="$SPEC_DIR/${SPEC_ID}-order-discount.md"
 
 if [[ ! -f "$SPEC_FILE" ]]; then
