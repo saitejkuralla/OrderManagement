@@ -106,8 +106,6 @@ T1 → T2 → T3
 
 Complete T1 fully, then T2, then T3, in that order. Do not start a downstream task while an upstream dependency is incomplete, and do not reorder tasks to save time.
 
-For parallel groups in the plan (tasks with no dependency between them), you may implement them in any order, but each task must still be completed in full before being marked done.
-
 ---
 
 # Validation Before Reporting Completion

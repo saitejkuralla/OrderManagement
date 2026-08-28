@@ -28,22 +28,39 @@ You are the coordinator, not the implementation worker.
 
 ---
 
+# Timing Data Source
+
+Subagent dispatches (`implementer`, `testing-agent`, `security-agent`) trigger `subagentStart`/`subagentStop` hooks (see `.github/hooks/spec-enforcement.json`) that append real-clock timestamps to a per-session log at `.github/copilot-execution/<session_id>-timing.jsonl`.
+
+When producing the run record (Phase 5/6):
+
+1. Look for the most recently modified `*-timing.jsonl` file under `.github/copilot-execution/`.
+2. If it exists and contains matched `start`/`stop` pairs for the agents dispatched in this run, treat those timestamps as authoritative and set `timing_source: "hook"`.
+3. Otherwise (hooks disabled, e.g. `chat.useCustomAgentHooks` is off, or entries are missing/unmatched), fall back to the self-reported timestamps recorded manually in the phases below and set `timing_source: "self-reported"`.
+
+Always record the self-reported timestamps described below regardless of whether hooks are expected to be available, so the fallback is never missing data.
+
+---
+
 # Phase 1 — Implementation
 
 When given a SPEC and execution plan:
 
-1. Read the SPEC.
-2. Read the execution plan. Prefer the persisted plan at `docs/plan/<SPEC-ID>-plan.md` when it exists; otherwise use the plan text supplied directly in the conversation.
-3. Delegate implementation work to:
+1. Record `orchestration_start` (self-reported fallback value).
+2. Read the SPEC.
+3. Read the execution plan. Prefer the persisted plan at `docs/plan/<SPEC-ID>-plan.md` when it exists; otherwise use the plan text supplied directly in the conversation.
+4. Record `implementer_start` (self-reported fallback value).
+5. Delegate implementation work to:
 
    `implementer`
 
-4. Wait for the implementation to complete.
-5. Read the implementer's report and extract its `Recommendation` value.
-6. Gate on the recommendation:
-   - If the recommendation is `BLOCKED`, STOP immediately. Do not proceed to Phase 2, 3, or 4. Report the block reason and the implementer's "Blocked or Incomplete Items" section back to the user.
+6. Wait for the implementation to complete.
+7. Record `implementer_end` (self-reported fallback value).
+8. Read the implementer's report and extract its `Recommendation` value.
+9. Gate on the recommendation:
+   - If the recommendation is `BLOCKED`, STOP immediately. Do not proceed to Phase 2, 3, or 4. Record `orchestration_end` and calculate `total_wall_clock_ms` before reporting. Report the block reason and the implementer's "Blocked or Incomplete Items" section back to the user.
    - Only proceed to Phase 2 if the recommendation is `READY FOR REVIEW`.
-7. Record the implementation completion state.
+10. Record the implementation completion state.
 
 The implementation is performed only once for the controlled serial-versus-parallel experiment.
 
@@ -126,14 +143,24 @@ For every run capture:
 - execution strategy
 - SPEC ID
 - implementation baseline
+- timing source (`hook` or `self-reported`, per "Timing Data Source" above)
+- orchestration start/end timestamps
+- total end-to-end wall-clock duration (implementer dispatch through review completion, or through a BLOCKED stop)
+- implementer-agent start/end
 - run start timestamp
 - run end timestamp
-- wall-clock duration
+- wall-clock duration (review phase only)
 - testing-agent start/end
 - security-agent start/end
 - test result
 - security result
 - output locations
+
+Calculate:
+
+`total_wall_clock_ms = orchestration_end - orchestration_start`
+
+This is distinct from the review-phase `wall_clock_ms` calculated in Phase 3/4 — `total_wall_clock_ms` spans the full pipeline.
 
 For AI Credits:
 
@@ -165,6 +192,16 @@ Use this structure:
   "spec_id": "",
   "strategy": "serial|parallel",
   "implementation_baseline": "",
+  "timing_source": "hook|self-reported",
+  "orchestration_start": "",
+  "orchestration_end": "",
+  "total_wall_clock_ms": 0,
+  "implementer_agent": {
+    "start": "",
+    "end": "",
+    "duration_ms": 0,
+    "recommendation": ""
+  },
   "run_start": "",
   "run_end": "",
   "wall_clock_ms": 0,

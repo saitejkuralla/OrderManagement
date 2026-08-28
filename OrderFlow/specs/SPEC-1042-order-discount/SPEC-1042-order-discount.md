@@ -2,95 +2,158 @@
 
 ## 1. Objective
 
-Add support for applying a percentage discount to an Order.
+Enable an Order to have a percentage-based discount.
 
-The discount must be calculated only when the order is eligible.
+The discount must affect the Order's final total according to the
+configured discount percentage.
+
+---
 
 ## 2. Functional Requirements
 
-### FR-01 — Discount percentage
+### FR-01 — Discount Percentage
 
-An order may have a discount percentage between 0 and 30 inclusive.
+An Order can have a discount percentage from 0% through 30% inclusive.
 
-### FR-02 — Discount calculation
+The default discount percentage is 0%.
 
-The discount amount must be calculated from the order subtotal.
+### FR-02 — Apply Discount
+
+A discount percentage can be applied to an Order.
+
+The supplied percentage must be used when calculating the Order's
+discount and final total.
+
+### FR-03 — Discount Amount
+
+The discount amount must be calculated from the Order subtotal.
 
 Formula:
 
 DiscountAmount = Subtotal * DiscountPercentage / 100
 
-### FR-03 — Final total
+### FR-04 — Final Total
 
-FinalTotal must be:
+The Order's final total must be calculated as:
 
 FinalTotal = Subtotal - DiscountAmount
 
-### FR-04 — Invalid discount
+### FR-05 — Invalid Discount
 
-A discount percentage below 0 or above 30 must be rejected.
+A discount percentage below 0% or above 30% must be rejected.
 
-### FR-05 — Zero discount
+The Order must not apply an invalid discount.
 
-A discount percentage of 0 must leave the order total unchanged.
+### FR-06 — Zero Discount
 
-## 3. Implementation Scope
+A discount percentage of 0% must result in:
 
-Allowed:
+DiscountAmount = 0
 
-- Order domain/model code
-- Discount calculation code
-- Order-related tests
-- Discount-related tests
-- SPEC documentation
+The Order's final total must remain equal to its subtotal.
 
-Expected areas:
+---
 
-OrderFlow/backend/OrderFlow.Domain/Entities/**
-OrderFlow/backend/OrderFlow.Domain/Discounts/**
-OrderFlow/backend/OrderFlow.Application/**
-OrderFlow/tests/OrderFlow.UnitTests/Domain/**
-OrderFlow/tests/OrderFlow.UnitTests/Application/**
-OrderFlow/specs/**
+## 3. Acceptance Criteria
 
-## 4. Out of Scope
+### AC-01 — Valid Discount
 
-Do not modify:
+Given an Order with a subtotal of 1000,
 
-- Payment processing
-- Customer management
-- Shipping
-- Infrastructure/deployment
-- Authentication
-- Database schema unless explicitly required by the existing design
+When a 10% discount is applied,
 
-Expected forbidden examples:
+Then:
 
-OrderFlow/backend/OrderFlow.Infrastructure/**
-OrderFlow/backend/OrderFlow.Api/Controllers/CustomersController.cs
-OrderFlow/backend/OrderFlow.Api/Controllers/ProductsController.cs
-OrderFlow/frontend/**
+- DiscountAmount = 100
+- FinalTotal = 900
+
+### AC-02 — Zero Discount
+
+Given an Order with a subtotal of 1000,
+
+When a 0% discount is applied,
+
+Then:
+
+- DiscountAmount = 0
+- FinalTotal = 1000
+
+### AC-03 — Maximum Discount
+
+Given an Order with a subtotal of 1000,
+
+When a 30% discount is applied,
+
+Then:
+
+- DiscountAmount = 300
+- FinalTotal = 700
+
+### AC-04 — Negative Discount
+
+Given an Order,
+
+When a discount below 0% is applied,
+
+Then the discount must be rejected.
+
+### AC-05 — Discount Above Maximum
+
+Given an Order,
+
+When a discount above 30% is applied,
+
+Then the discount must be rejected.
+
+### AC-06 — Final Total Calculation
+
+Given an Order with:
+
+- Subtotal = 2500
+- DiscountPercentage = 20%
+
+Then:
+
+- DiscountAmount = 500
+- FinalTotal = 2000
+
+---
+
+## 4. Constraints
+
+- The existing Order behavior must continue to work when no discount
+  is applied.
+- Invalid discount percentages must not be applied.
+- The implementation must not change unrelated Order behavior.
+
+---
 
 ## 5. Testing Requirements
 
-Tests must cover:
+The implementation must be validated for:
 
-1. Valid discount
-2. Zero discount
-3. Maximum discount
-4. Negative discount
-5. Discount greater than 30
-6. Final total calculation
+- valid discounts
+- zero discount
+- maximum discount
+- negative discount
+- discount above 30%
+- discount amount calculation
+- final total calculation
+- existing Order behavior without a discount
+
+---
 
 ## 6. Completion Criteria
 
-The implementation is complete only when:
+The feature is complete when:
 
-- Functional requirements are implemented.
-- Required tests are present.
-- Tests pass.
-- No out-of-scope files are modified.
-- The implementation can be reviewed against this SPEC.
+- All functional requirements are implemented.
+- All acceptance criteria are satisfied.
+- Required tests are present and passing.
+- Existing relevant tests continue to pass.
+- The implementation is ready for independent testing and security review.
+
+---
 
 ## 7. SPEC Identifier
 

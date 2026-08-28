@@ -26,6 +26,13 @@
         "powershell": "./.github/hooks/scripts/spec-context.ps1",
         "cwd": ".",
         "timeoutSec": 10
+      },
+      {
+        "type": "command",
+        "bash": "./.github/hooks/scripts/agent-timing-start.sh",
+        "powershell": "./.github/hooks/scripts/agent-timing-start.ps1",
+        "cwd": ".",
+        "timeoutSec": 10
       }
     ],
     "subagentStop": [
@@ -33,6 +40,13 @@
         "type": "command",
         "bash": "./.github/hooks/scripts/spec-validator.sh",
         "powershell": "./.github/hooks/scripts/spec-validator.ps1",
+        "cwd": ".",
+        "timeoutSec": 10
+      },
+      {
+        "type": "command",
+        "bash": "./.github/hooks/scripts/agent-timing-stop.sh",
+        "powershell": "./.github/hooks/scripts/agent-timing-stop.ps1",
         "cwd": ".",
         "timeoutSec": 10
       }
