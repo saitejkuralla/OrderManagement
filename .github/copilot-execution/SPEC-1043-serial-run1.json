@@ -1,0 +1,44 @@
+{
+  "run_id": "SPEC-1043-serial-run1",
+  "spec_id": "SPEC-1043",
+  "strategy": "serial",
+  "implementation_baseline": "branch dev3-spec-execution @ commit 974aabf4460eea1de3b41ce98c849231ad6eae90 + uncommitted working tree changes (backend/OrderFlow.Api/Contracts/Requests/CreateOrderRequest.cs, backend/OrderFlow.Api/Controllers/OrdersController.cs, backend/OrderFlow.Api/Validation/CreateOrderRequestValidator.cs, backend/OrderFlow.Application/Contracts/Commands/CreateOrderCommand.cs, backend/OrderFlow.Application/Services/OrderService.cs, backend/OrderFlow.Infrastructure/InfrastructureServiceCollectionExtensions.cs, tests/OrderFlow.UnitTests/Application/Services/OrderServiceTests.cs, tests/OrderFlow.IntegrationTests/Api/OrdersApiTests.cs, new files backend/OrderFlow.Domain/Discounts/{CouponCatalog.cs,CouponDiscountCalculator.cs,CouponDiscountOutcome.cs,ICouponDiscountCalculator.cs}, tests/OrderFlow.UnitTests/Domain/Discounts/{CouponCatalogTests.cs,CouponDiscountCalculatorTests.cs}); solution builds with 0 errors/0 warnings and 53/53 tests passing prior to review dispatch",
+  "timing_source": "self-reported",
+  "timing_source_note": "Hook log .github/copilot-execution/918dc7e7-9720-4652-bee7-684b19195722-timing.jsonl contains only 'stop' events for implementer (x2)/testing-agent/security-agent with no matching 'start' events, so hook durations could not be computed; self-reported terminal timestamps were used as the authoritative source per orchestrator instructions.",
+  "orchestration_start": "2026-08-28T15:41:06.175+05:30",
+  "orchestration_end": "2026-08-28T15:55:35.461+05:30",
+  "total_wall_clock_ms": 869286,
+  "implementer_agent": {
+    "start": "2026-08-28T15:41:10.003+05:30",
+    "end": "2026-08-28T15:50:49.892+05:30",
+    "duration_ms": 579889,
+    "duration_note": "Two sequential implementer dispatches: (1) T1-T7 production code, (2) T8-T10 test authoring, required because testing-agent is read-only and cannot author test files.",
+    "recommendation": "READY FOR REVIEW"
+  },
+  "run_start": "2026-08-28T15:50:57.015+05:30",
+  "run_end": "2026-08-28T15:55:28.973+05:30",
+  "wall_clock_ms": 271958,
+  "testing_agent": {
+    "start": "2026-08-28T15:50:57.015+05:30",
+    "end": "2026-08-28T15:53:16.430+05:30",
+    "duration_ms": 139415,
+    "status": "PASS"
+  },
+  "security_agent": {
+    "start": "2026-08-28T15:53:16.430+05:30",
+    "end": "2026-08-28T15:55:28.973+05:30",
+    "duration_ms": 132543,
+    "status": "PASS WITH FINDINGS (1 Low, 2 Informational)"
+  },
+  "ai_credits": {
+    "value": null,
+    "unit": "credits",
+    "source": "none",
+    "measurement_period": "",
+    "status": "unavailable"
+  },
+  "outputs": {
+    "test_report": "Reported inline by testing-agent in orchestrator conversation (not persisted to a file). Summary: Status PASS - dotnet build 0 errors/0 warnings; dotnet test 53/53 passed (39 unit + 14 integration); AC-01 through AC-06 each independently verified as covered by name-traceable tests; Known Limitation (SPEC section 8) explicitly tested via CreateOrder_WithCoupon_ThenGetById_DoesNotIncludeCouponLineItem_KnownLimitation; pre-existing tier/large-order discount and order-flow (confirm/cancel/list) regression tests confirmed passing unmodified.",
+    "security_report": "Reported inline by security-agent in orchestrator conversation (not persisted to a file). Summary: Status PASS WITH FINDINGS - 1 Low finding (raw CouponCode reflected unescaped into BusinessRuleViolationException message / ProblemDetails.Detail and into the AppliedDiscount label in OrderService.cs; defense-in-depth recommendation to avoid interpolating raw input and/or restrict CouponCode to an alphanumeric allow-list) and 2 Informational notes (pre-existing lack of authentication/authorization on /api/orders, not introduced by this SPEC; coupon 20% cap currently unreachable given the fixed catalog, which is a harmless safety net). All T12 checks passed: no persistence of coupon code, OrdinalIgnoreCase culture-invariant comparison, no sensitive logging, generic ProblemDetails error responses with no internal detail leakage, bounded input length (MaximumLength(20)), no injection vector, and no client-side total/cap bypass."
+  }
+}
