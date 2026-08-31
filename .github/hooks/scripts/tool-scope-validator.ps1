@@ -5,7 +5,7 @@ $inputJson = [Console]::In.ReadToEnd()
 try {
     $data = $inputJson | ConvertFrom-Json
 } catch {
-    @{ 
+    @{
         permissionDecision = "deny"
         permissionDecisionReason = "Hook received malformed JSON input."
     } | ConvertTo-Json -Compress
@@ -33,11 +33,12 @@ if ($writeTools -notcontains $tool) {
 }
 
 $allowed = @(
-    "(^|[\/])OrderFlow[\/]backend[\/]OrderFlow\.Domain[\/]Entities[\/]",
-    "(^|[\/])OrderFlow[\/]backend[\/]OrderFlow\.Domain[\/]Discounts[\/]",
-    "(^|[\/])OrderFlow[\/]backend[\/]OrderFlow\.Application[\/]",
-    "(^|[\/])OrderFlow[\/]tests[\/]OrderFlow\.UnitTests[\/]",
-    "(^|[\/])OrderFlow[\/]specs[\/]"
+    "OrderFlow[\\/]+backend[\\/]+OrderFlow\.Domain[\\/]+Entities[\\/]+",
+    "OrderFlow[\\/]+backend[\\/]+OrderFlow\.Domain[\\/]+Discounts[\\/]+",
+    "OrderFlow[\\/]+backend[\\/]+OrderFlow\.Application[\\/]+",
+    "OrderFlow[\\/]+backend[\\/]+OrderFlow\.Api[\\/]+",
+    "OrderFlow[\\/]+tests[\\/]+OrderFlow\.UnitTests[\\/]+",
+    "OrderFlow[\\/]+specs[\\/]+"
 )
 
 foreach ($pattern in $allowed) {
@@ -49,5 +50,6 @@ foreach ($pattern in $allowed) {
 
 @{
     permissionDecision = "deny"
-    permissionDecisionReason = "SPEC-1042 scope enforcement blocked this write. Allowed write scope: OrderFlow/backend/OrderFlow.Domain/Entities/**, OrderFlow/backend/OrderFlow.Domain/Discounts/**, OrderFlow/backend/OrderFlow.Application/**, OrderFlow/tests/OrderFlow.UnitTests/**, OrderFlow/specs/**."
+    permissionDecisionReason = "SPEC-1043 scope enforcement blocked this write. Allowed write scope: OrderFlow/backend/OrderFlow.Domain/Entities/**, OrderFlow/backend/OrderFlow.Domain/Discounts/**, OrderFlow/backend/OrderFlow.Application/**, OrderFlow/backend/OrderFlow.Api/**, OrderFlow/tests/OrderFlow.UnitTests/**, OrderFlow/specs/**."
 } | ConvertTo-Json -Compress
+exit 0

@@ -1,10 +1,10 @@
 $ErrorActionPreference = "Stop"
 
 $inputJson = [Console]::In.ReadToEnd()
-$specId = if ($env:SPEC_ID) { $env:SPEC_ID } else { "SPEC-1042" }
+$specId = if ($env:SPEC_ID) { $env:SPEC_ID } else { "SPEC-1043" }
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "../../..")).Path
-$specFile = Join-Path $repoRoot "OrderFlow/specs/$specId-order-discount/$specId-order-discount.md"
+$specFile = Join-Path $repoRoot "OrderFlow/specs/$specId-promotional-discount/$specId-promotional-discount.md"
 
 if (-not (Test-Path $specFile)) {
     @{
